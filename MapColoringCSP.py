@@ -1,4 +1,4 @@
-import CSP
+from CSP import CSP
 class MapColoringCSP(CSP):
     def conflicts(self, state1, color1, state2, color2):
         # Check if two states are neighbors and have the same color

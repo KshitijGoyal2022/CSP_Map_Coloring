@@ -1,7 +1,7 @@
-import AC3MapColoringSolver
+from AC3MapColoringSolver import AC3MapColoringSolver
 from AC3 import *
 
-class AC3MRVLCVMapSolver(AC3MapSolver):
+class AC3MRVLCVMapSolver(AC3MapColoringSolver):
     def count_conflict(self,csp,state,color):
         cnt =0
         for neighbor in csp.adjList[state]:
@@ -18,32 +18,33 @@ class AC3MRVLCVMapSolver(AC3MapSolver):
         array[idx],array[-1] = array[-1],array[idx]
         return array.pop()
 
-    def solveSudoku(self, board):
-        """
-        :type board: List[List[str]]
-        :rtype: void Do not return anything, modify board in-place instead.
-        """
-        # Build CSP problem
-        csp, assigned = self.buildCspProblem(board)
-        # Enforce AC3 on initial assignments
-        if not AC3(csp, makeArcQue(csp, assigned)):
+
+    def solveMapColoring(self,states,neighbors):
+        csp = self.buildCspProblem(states, neighbors)
+
+        if not AC3(csp, makeArcQueue(csp)):
             return False
-        # If there's still uncertain choices
+
         uncertain = []
-        for i in range(9):
-            for j in range(9):
-                if len(csp.domains[(i, j)]) > 1:
-                    uncertain.append((i, j))
-        # Search with backtracking
+        for state, colors in csp.domains.items():
+            if len(colors) > 1:
+                uncertain.append(state)
+        self.backtrack(csp, uncertain)
+
         if not self.backtrack(csp, uncertain):
             return False
-        # Fill answer back to input table
-        for i in range(9):
-            for j in range(9):
-                if board[i][j] == '.':
-                    assert len(csp.domains[(i, j)]) == 1
-                    board[i][j] = str(csp.domains[(i, j)].pop() + 1)
-        return True
+
+        if self.backtrack(csp, uncertain):
+            self.print_solution(csp)
+        else:
+            print("No solution could be found.")
+
+        # # Fill answer back to input table (Will alter this later on to give output)
+        # for i in range(9):
+        #     for j in range(9):
+        #         if board[i][j] == '.':
+        #             assert len(csp.domains[(i, j)]) == 1
+        #             board[i][j] = str(csp.domains[(i, j)].pop() + 1)
 
     def backtrack(self, csp, uncertain):
         if not uncertain:
@@ -56,7 +57,7 @@ class AC3MRVLCVMapSolver(AC3MapSolver):
         for x in domainlist:
             domainX = csp.domains[X]
             csp.domains[X] = set([x])
-            if AC3(csp, makeArcQue(csp, [X]), removals):
+            if AC3(csp, makeArcQueue(csp), removals):
                 retval = self.backtrack(csp, uncertain)
                 if retval:
                     return True
@@ -64,3 +65,12 @@ class AC3MRVLCVMapSolver(AC3MapSolver):
             csp.domains[X] = domainX
         uncertain.append(X)
         return False
+
+    def print_solution(self, csp):
+        for state, colors in csp.domains.items():
+            if len(colors) == 1:
+                # Assuming each color is represented as an integer
+                print(f"{state}: Color {next(iter(colors)) + 1}")
+            else:
+                print(f"{state}: No solution found")
+
