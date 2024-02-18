@@ -1,3 +1,4 @@
+import test
 from AC3MapColoringSolver import AC3MapColoringSolver
 from AC3 import *
 
@@ -59,10 +60,14 @@ class AC3MRVLCVMapSolver(AC3MapColoringSolver):
         return False
 
     def print_solution(self, csp):
+        states_colors= {}
         for state, colors in csp.domains.items():
             if len(colors) == 1:
                 # Assuming each color is represented as an integer
-                print(f"{state}: Color {next(iter(colors)) + 1}")
+                states_colors[state] = next(iter(colors))
+                print(f"{state} ----> Color {next(iter(colors))}")
             else:
                 print(f"{state}: No solution found")
+        print(states_colors)
+        test.ColorCountry(states_colors)
 

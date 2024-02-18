@@ -1,81 +1,44 @@
 from AC3MRVLCVMapSolver import AC3MRVLCVMapSolver
 
-from collections import defaultdict
-from MapColoringCSP import MapColoringCSP
-
-# neighbors= {
-#     "KIGALI": ["NORTH","SOUTH","EAST"],
-#     "EAST":["KIGALI","NORTH","SOUTH"],
-#     "SOUTH":["WEST","NORTH","KIGALI","EAST"],
-#     "WEST":["NORTH","SOUTH"],
-#     "NORTH":["WEST","SOUTH","KIGALI","EAST"]
-# }
-#
-# states ={
-#     "KIGALI": None,
-#     "EAST": None,
-#     "SOUTH": None,
-#     "WEST": None,
-#     "NORTH": None
-# }
-
 neighbors = {
-    "SCHLESWIG-HOLSTEIN":["HAMBURG","MECKLENBURG-VORPOMMERN","NIEDERSACHSEN"],
-    "HAMBURG":["SCHLESWIG-HOLSTEIN","NIEDERSACHSEN"],
-    "MECKLENBURG-VORPOMMERN":["BRANDENBURG","SACHSEN-ANHALT","NIEDERSACHSEN"],
-    "BREMEN":["NIEDERSACHSEN"],
-    "NORDRHEIN-WESTFALEN":["NIEDERSACHSEN","HESSEN","RHEINLAND-PFALZ"],
-    "BRANDENBURG":["BERLIN","MECKLENBURG-VORPOMMERN","SACHSEN-ANHALT","SACHSEN","NIEDERSACHSEN"],
-    "HESSEN":["NORDRHEIN-WESTFALEN","RHEINLAND-PFALZ","BADEN-WURTTEMBERG","BAYERN","THURINGEN","NIEDERSACHSEN"],
-    "RHEINLAND-PFALZ":["SAARLAND","HESSEN","NORDRHEIN-WESTFALEN","BADEN-WURTTEMBERG"],
-    "BAYERN":["BADEN-WURTTEMBERG","HESSEN","THURINGEN","SACHSEN"],
-    "SAARLAND":["RHEINLAND-PFALZ"],
-    "THURINGEN":["HESSEN","BAYERN","SACHSEN","SACHSEN-ANHALT","NIEDERSACHSEN"],
-    "SACHSEN":["BRANDENBURG","SACHSEN-ANHALT","THURINGEN","BAYERN"],
-    "NIEDERSACHSEN":["BREMEN","HAMBURG","SCHLESWIG-HOLSTEIN","SACHSEN-ANHALT","THURINGEN","HESSEN","NORDRHEIN-WESTFALEN","MECKLENBURG-VORPOMMERN","BRANDENBURG"],
-    "BADEN-WURTTEMBERG":["BAYERN","HESSEN","RHEINLAND-PFALZ"],
-    "BERLIN":["BRANDENBURG"]
+    "Schleswig-Holstein":["Hamburg","Mecklenburg-Vorpommern","Niedersachsen"],
+    "Hamburg":["Schleswig-Holstein","Niedersachsen"],
+    "Mecklenburg-Vorpommern":["Brandenburg","Sachsen-Anhalt","Niedersachsen"],
+    "Bremen":["Niedersachsen"],
+    "Nordrhein-Westfalen":["Niedersachsen","Hessen","Rheinland-Pfalz"],
+    "Brandenburg":["Berlin","Mecklenburg-Vorpommern","Sachsen-Anhalt","Sachsen","Niedersachsen"],
+    "Hessen":["Nordrhein-Westfalen","Rheinland-Pfalz","Baden-Württemberg","Bayern","Thüringen","Niedersachsen"],
+    "Rheinland-Pfalz":["Saarland","Hessen","Nordrhein-Westfalen","Baden-Württemberg"],
+    "Bayern":["Baden-Württemberg","Hessen","Thüringen","Sachsen"],
+    "Saarland":["Rheinland-Pfalz"],
+    "Thüringen":["Hessen","Bayern","Sachsen","Sachsen-Anhalt","Niedersachsen"],
+    "Sachsen":["Brandenburg","Sachsen-Anhalt","Thüringen","Bayern"],
+    "Niedersachsen":["Bremen","Hamburg","Schleswig-Holstein","Sachsen-Anhalt","Thüringen","Hessen","Nordrhein-Westfalen","Mecklenburg-Vorpommern","Brandenburg"],
+    "Baden-Württemberg":["Bayern","Hessen","Rheinland-Pfalz"],
+    "Berlin":["Brandenburg"]
 }
 
 states = {
-    "SCHLESWIG-HOLSTEIN": None,
-    "HAMBURG": None,
-    "MECKLENBURG-VORPOMMERN": None,
-    "BREMEN": None,
-    "NORDRHEIN-WESTFALEN": None,
-    "BRANDENBURG": None,
-    "HESSEN": None,
-    "RHEINLAND-PFALZ": None,
-    "BAYERN": None,
-    "SAARLAND": None,
-    "THURINGEN": None,
-    "SACHSEN": None,
-    "NIEDERSACHSEN": None,
-    "BADEN-WURTTEMBERG": None,
-    "BERLIN": None,
-    "SACHSEN-ANHALT": None
+    "Schleswig-Holstein": None,
+    "Hamburg": None,
+    "Mecklenburg-Vorpommern": None,
+    "Bremen": None,
+    "Nordrhein-Westfalen": None,
+    "Brandenburg": None,
+    "Hessen": None,
+    "Rheinland-Pfalz": None,
+    "Bayern": None,
+    "Saarland": None,
+    "Thüringen": None,
+    "Sachsen": None,
+    "Niedersachsen": None,
+    "Baden-Württemberg": None,
+    "Berlin": None,
+    "Sachsen-Anhalt": None
 }
 
 sol = AC3MRVLCVMapSolver()
 sol.solveMapColoring(states=states, neighbors=neighbors)
 
-
-# def addEdge(state1, state2, adjList):
-#     adjList[state1].add(state2)
-#     adjList[state2].add(state1)
-#
-#
-# def buildCspProblem(states, neighbors):
-#     adjList = defaultdict(set)
-#     # Build graph (constraints) based on neighboring information
-#     for state1, adjStates in neighbors.items():
-#         for state2 in adjStates:
-#             addEdge(state1, state2, adjList)
-#     # Set domains (colors available for each state)
-#     variables = list(states.keys())
-#     domains = {state: set(range(4)) for state in states}  # Assuming 4 different colors
-#     return MapColoringCSP(variables, adjList, domains)
-#
-# print(buildCspProblem(states,neighbors).domains)
 
 
