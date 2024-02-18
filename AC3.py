@@ -7,10 +7,10 @@ def AC3(csp, queue=None, removals=defaultdict(set)):
         queue = [(Xt,X) for Xt in csp.adjList for X in csp.adjList[Xt]]
 
     while queue:
-
         #Xt --> Xh Delete from domain of Xt
         (Xt,Xh) = queue.pop()
         if remove_inconsistent_values(csp,Xt,Xh,removals):
+            print('t:',csp.domains)
             if not csp.domains[Xt]:
                 return False
             elif len(csp.domains[Xt])>1:

@@ -1,4 +1,4 @@
-import test
+import MapColoringGUI
 from AC3MapColoringSolver import AC3MapColoringSolver
 from AC3 import *
 
@@ -20,8 +20,9 @@ class AC3MRVLCVMapSolver(AC3MapColoringSolver):
         return array.pop()
 
 
-    def solveMapColoring(self,states,neighbors):
-        csp = self.buildCspProblem(states, neighbors)
+    def solveMapColoring(self,states,neighbors,color_choices):
+        csp = self.buildCspProblem(states, neighbors, color_choices)
+        print('HIYA:',csp.domains)
 
         if not AC3(csp, makeArcQueue(csp)):
             print("No solution could be found.")
@@ -29,6 +30,7 @@ class AC3MRVLCVMapSolver(AC3MapColoringSolver):
 
         uncertain = []
         for state, colors in csp.domains.items():
+            print(state,colors)
             if len(colors) > 1:
                 uncertain.append(state)
         self.backtrack(csp, uncertain)
@@ -69,5 +71,5 @@ class AC3MRVLCVMapSolver(AC3MapColoringSolver):
             else:
                 print(f"{state}: No solution found")
         print(states_colors)
-        test.ColorCountry(states_colors)
+        MapColoringGUI.ColorCountry(states_colors)
 

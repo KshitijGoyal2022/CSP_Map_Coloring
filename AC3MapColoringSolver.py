@@ -2,8 +2,8 @@ from AC3 import *
 from MapColoringSolver import MapColoringSolver
 from collections import defaultdict
 class AC3MapColoringSolver(MapColoringSolver):
-    def solveMapColoring(self,states,neighbors):
-        csp= self.buildCspProblem(states,neighbors)
+    def solveMapColoring(self,states,neighbors, color_choices):
+        csp= self.buildCspProblem(states,neighbors, color_choices)
 
         AC3(csp,makeArcQueue(csp))
 
