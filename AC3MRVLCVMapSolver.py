@@ -23,6 +23,7 @@ class AC3MRVLCVMapSolver(AC3MapColoringSolver):
         csp = self.buildCspProblem(states, neighbors)
 
         if not AC3(csp, makeArcQueue(csp)):
+            print("No solution could be found.")
             return False
 
         uncertain = []
@@ -36,15 +37,6 @@ class AC3MRVLCVMapSolver(AC3MapColoringSolver):
 
         if self.backtrack(csp, uncertain):
             self.print_solution(csp)
-        else:
-            print("No solution could be found.")
-
-        # # Fill answer back to input table (Will alter this later on to give output)
-        # for i in range(9):
-        #     for j in range(9):
-        #         if board[i][j] == '.':
-        #             assert len(csp.domains[(i, j)]) == 1
-        #             board[i][j] = str(csp.domains[(i, j)].pop() + 1)
 
     def backtrack(self, csp, uncertain):
         if not uncertain:

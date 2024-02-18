@@ -14,7 +14,7 @@ class MapColoringSolver(object):
                 self.addEdge(state1, state2, adjList)
         # Set domains (colors available for each state)
         variables = list(states.keys())
-        domains = {state: set(range(5)) for state in states}  # Assuming 4 different colors
+        domains = {state: set(range(1)) for state in states}  # Assuming 4 different colors
         return MapColoringCSP(variables, adjList, domains)
 
     def solveMapColoring(self,states,neighbors):
