@@ -6,18 +6,25 @@ import matplotlib.pyplot as plt
 
 # german_states = gpd.read_file('path_to_german_states_geojson.json')
 # german_states = gpd.read_file('path_to_france_states_geojson.json')
-german_states = gpd.read_file('path_to_rwanda_states_geojson.json')
-def ColorCountry(states_colors):
+# german_states = gpd.read_file('path_to_rwanda_states_geojson.json')
+def ColorCountry(country_choice,states_colors):
+    if country_choice == "Germany":
+        country_states = gpd.read_file('path_to_german_states_geojson.json')
+    elif country_choice == "France":
+        country_states = gpd.read_file('path_to_france_states_geojson.json')
+    elif country_choice == "Rwanda":
+        country_states = gpd.read_file('path_to_rwanda_states_geojson.json')
+
 # Prepare the figure and axis
     fig, ax = plt.subplots(1, 1, figsize=(10, 12))
 
     # Plot each state with its corresponding color
     for state, color in states_colors.items():
-        print(len(german_states[german_states['name'].str.upper() == state.upper()]))
-        german_states[german_states['name'].str.upper() == state.upper()].plot(ax=ax, color=color, edgecolor='black')
+        print(len(country_states[country_states['name'].str.upper() == state.upper()]))
+        country_states[country_states['name'].str.upper() == state.upper()].plot(ax=ax, color=color, edgecolor='black')
     # Remove axis off
     ax.set_axis_off()
-    plt.title('Map of Germany with States')
+    plt.title(f'Map of {country_choice} with States')
     plt.show()
 
 # ColorCountry(states_colors)

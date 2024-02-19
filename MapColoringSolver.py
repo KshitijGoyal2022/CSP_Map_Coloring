@@ -18,6 +18,6 @@ class MapColoringSolver(object):
         domains = {state: color_choices.copy() for state in states}  # Assuming 4 different colors
         return MapColoringCSP(variables, adjList, domains)
 
-    def solveMapColoring(self,states,neighbors,color_choices):
+    def solveMapColoring(self,country_choice,states,neighbors,color_choices):
         pass
 

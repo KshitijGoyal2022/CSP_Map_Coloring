@@ -1,28 +1,28 @@
-import MapColoringGUI
 from AC3MapColoringSolver import AC3MapColoringSolver
 from AC3 import *
+import MapColoringGUI
+
 
 class AC3MRVLCVMapSolver(AC3MapColoringSolver):
-    def count_conflict(self,csp,state,color):
-        cnt =0
+    def count_conflict(self, csp, state, color):
+        cnt = 0
         for neighbor in csp.adjList[state]:
             if color in csp.domains[neighbor]:
-                cnt +=1
+                cnt += 1
         return cnt
 
-    def popMin(self,array,key):
-        minimum,idx = float("inf"),0
+    def popMin(self, array, key):
+        minimum, idx = float("inf"), 0
         for i in range(len(array)):
             if key(array[i]) < minimum:
-                idx  =i
+                idx = i
                 minimum = key(array[i])
-        array[idx],array[-1] = array[-1],array[idx]
+        array[idx], array[-1] = array[-1], array[idx]
         return array.pop()
 
-
-    def solveMapColoring(self,states,neighbors,color_choices):
+    def solveMapColoring(self, country_choice, states, neighbors, color_choices):
         csp = self.buildCspProblem(states, neighbors, color_choices)
-        print('HIYA:',csp.domains)
+        print('HIYA:', csp.domains)
 
         if not AC3(csp, makeArcQueue(csp)):
             print("No solution could be found.")
@@ -30,7 +30,7 @@ class AC3MRVLCVMapSolver(AC3MapColoringSolver):
 
         uncertain = []
         for state, colors in csp.domains.items():
-            print(state,colors)
+            print(state, colors)
             if len(colors) > 1:
                 uncertain.append(state)
         self.backtrack(csp, uncertain)
@@ -39,7 +39,7 @@ class AC3MRVLCVMapSolver(AC3MapColoringSolver):
             return False
 
         if self.backtrack(csp, uncertain):
-            self.print_solution(csp)
+            self.print_solution(csp,country_choice)
 
     def backtrack(self, csp, uncertain):
         if not uncertain:
@@ -61,8 +61,8 @@ class AC3MRVLCVMapSolver(AC3MapColoringSolver):
         uncertain.append(X)
         return False
 
-    def print_solution(self, csp):
-        states_colors= {}
+    def print_solution(self, csp,country_choice):
+        states_colors = {}
         for state, colors in csp.domains.items():
             if len(colors) == 1:
                 # Assuming each color is represented as an integer
@@ -71,5 +71,4 @@ class AC3MRVLCVMapSolver(AC3MapColoringSolver):
             else:
                 print(f"{state}: No solution found")
         print(states_colors)
-        MapColoringGUI.ColorCountry(states_colors)
-
+        MapColoringGUI.ColorCountry(states_colors=states_colors,country_choice=country_choice)
