@@ -21,8 +21,7 @@ class AC3MRVLCVMapSolver(AC3MapColoringSolver):
         return array.pop()
 
     def solveMapColoring(self, country_choice, states, neighbors, color_choices):
-        csp = self.buildCspProblem(states, neighbors, color_choices)
-        print('HIYA:', csp.domains)
+        csp = self.buildCspProblem(states, neighbors, color_choices) #Creates the CSP using the inputted information
 
         if not AC3(csp, makeArcQueue(csp)):
             print("No solution could be found.")
@@ -30,7 +29,6 @@ class AC3MRVLCVMapSolver(AC3MapColoringSolver):
 
         uncertain = []
         for state, colors in csp.domains.items():
-            print(state, colors)
             if len(colors) > 1:
                 uncertain.append(state)
         self.backtrack(csp, uncertain)
@@ -65,7 +63,6 @@ class AC3MRVLCVMapSolver(AC3MapColoringSolver):
         states_colors = {}
         for state, colors in csp.domains.items():
             if len(colors) == 1:
-                # Assuming each color is represented as an integer
                 states_colors[state] = next(iter(colors))
                 print(f"{state} ----> Color {next(iter(colors))}")
             else:

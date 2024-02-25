@@ -3,18 +3,16 @@
 from collections import defaultdict
 
 def AC3(csp, queue=None, removals=defaultdict(set)):
-    if queue is None:
-        queue = [(Xt,X) for Xt in csp.adjList for X in csp.adjList[Xt]]
 
     while queue:
         #Xt --> Xh Delete from domain of Xt
         (Xt,Xh) = queue.pop()
         if remove_inconsistent_values(csp,Xt,Xh,removals):
-            print('t:',csp.domains)
             if not csp.domains[Xt]:
                 return False
             elif len(csp.domains[Xt])>1:
                 continue
+            #If revised, add tuples where the revised key is part of the head
             for X in csp.adjList[Xt]:
                 if X != Xt:
                     queue.append((X,Xt))

@@ -2,9 +2,6 @@ from AC3MRVLCVMapSolver import AC3MRVLCVMapSolver
 import tkinter as tk
 from tkinter import simpledialog
 from tkinter import messagebox
-import geopandas as gpd
-import matplotlib.pyplot as plt
-
 def get_user_color_choices():
     root = tk.Tk()
     root.withdraw()  # Hide the main window
@@ -32,10 +29,7 @@ def get_user_country_choice():
 
 
 color_choices = get_user_color_choices()
-print(color_choices)
 country_choice = get_user_country_choice()
-print(country_choice)
-
 
 if country_choice == "Germany":
     neighbors = {
@@ -45,15 +39,14 @@ if country_choice == "Germany":
         "Bremen": ["Niedersachsen"],
         "Nordrhein-Westfalen": ["Niedersachsen", "Hessen", "Rheinland-Pfalz"],
         "Brandenburg": ["Berlin", "Mecklenburg-Vorpommern", "Sachsen-Anhalt", "Sachsen", "Niedersachsen"],
-        "Hessen": ["Nordrhein-Westfalen", "Rheinland-Pfalz", "Baden-Württemberg", "Bayern", "Thüringen",
-                   "Niedersachsen"],
+        "Hessen": ["Nordrhein-Westfalen", "Rheinland-Pfalz", "Baden-Württemberg", "Bayern", "Thüringen", "Niedersachsen"],
         "Rheinland-Pfalz": ["Saarland", "Hessen", "Nordrhein-Westfalen", "Baden-Württemberg"],
         "Bayern": ["Baden-Württemberg", "Hessen", "Thüringen", "Sachsen"],
         "Saarland": ["Rheinland-Pfalz"],
         "Thüringen": ["Hessen", "Bayern", "Sachsen", "Sachsen-Anhalt", "Niedersachsen"],
         "Sachsen": ["Brandenburg", "Sachsen-Anhalt", "Thüringen", "Bayern"],
-        "Niedersachsen": ["Bremen", "Hamburg", "Schleswig-Holstein", "Sachsen-Anhalt", "Thüringen", "Hessen",
-                          "Nordrhein-Westfalen", "Mecklenburg-Vorpommern", "Brandenburg"],
+        "Niedersachsen": ["Bremen", "Hamburg", "Schleswig-Holstein", "Sachsen-Anhalt", "Thüringen",
+                          "Hessen", "Nordrhein-Westfalen", "Mecklenburg-Vorpommern", "Brandenburg"],
         "Baden-Württemberg": ["Bayern", "Hessen", "Rheinland-Pfalz"],
         "Berlin": ["Brandenburg"]
     }  # German neighbors dictionary
@@ -77,38 +70,39 @@ if country_choice == "Germany":
     }  # German states dictionary
 elif country_choice == "France":
     neighbors = {
-        "Auvergne-Rhône-Alpes": ["Bourgogne-Franche-Comté", "Occitanie", "Provence-Alpes-Côte d'Azur",
-                                 "Nouvelle-Aquitaine"],
-        "Bourgogne-Franche-Comté": ["Auvergne-Rhône-Alpes", "Centre-Val de Loire", "Grand Est", "Île-de-France",
-                                    "Nouvelle-Aquitaine"],
-        "Bretagne": ["Normandie", "Pays de la Loire"],
-        "Centre-Val de Loire": ["Bourgogne-Franche-Comté", "Nouvelle-Aquitaine", "Pays de la Loire", "Île-de-France"],
-        "Corse": [],
-        "Grand Est": ["Bourgogne-Franche-Comté", "Hauts-de-France", "Île-de-France", "Auvergne-Rhône-Alpes"],
         "Hauts-de-France": ["Normandie", "Île-de-France", "Grand Est"],
-        "Île-de-France": ["Hauts-de-France", "Normandie", "Centre-Val de Loire", "Bourgogne-Franche-Comté",
-                          "Grand Est"],
-        "Normandie": ["Bretagne", "Hauts-de-France", "Île-de-France", "Pays de la Loire"],
-        "Nouvelle-Aquitaine": ["Occitanie", "Auvergne-Rhône-Alpes", "Centre-Val de Loire", "Bourgogne-Franche-Comté"],
+        "Normandie": ["Hauts-de-France", "Île-de-France", "Centre-Val de Loire", "Bretagne","Pays de la Loire"],
+        "Île-de-France": ["Hauts-de-France", "Normandie", "Centre-Val de Loire", "Bourgogne-Franche-Comté", "Grand Est"],
+        "Grand Est": ["Hauts-de-France", "Île-de-France", "Bourgogne-Franche-Comté"],
+        "Bretagne": ["Normandie", "Pays de la Loire"],
+        "Pays de la Loire": ["Bretagne", "Normandie", "Centre-Val de Loire", "Nouvelle-Aquitaine"],
+        "Centre-Val de Loire": ["Normandie", "Île-de-France", "Bourgogne-Franche-Comté", "Auvergne-Rhône-Alpes",
+                                "Nouvelle-Aquitaine", "Pays de la Loire"],
+        "Bourgogne-Franche-Comté": ["Île-de-France", "Centre-Val de Loire", "Auvergne-Rhône-Alpes", "Grand Est"],
+        "Auvergne-Rhône-Alpes": ["Centre-Val de Loire", "Bourgogne-Franche-Comté",
+                                 "Provence-Alpes-Côte d'Azur", "Occitanie", "Nouvelle-Aquitaine"],
+        "Nouvelle-Aquitaine": ["Pays de la Loire", "Centre-Val de Loire", "Auvergne-Rhône-Alpes", "Occitanie"],
         "Occitanie": ["Nouvelle-Aquitaine", "Auvergne-Rhône-Alpes", "Provence-Alpes-Côte d'Azur"],
-        "Pays de la Loire": ["Bretagne", "Centre-Val de Loire", "Normandie"],
-        "Provence-Alpes-Côte d'Azur": ["Auvergne-Rhône-Alpes", "Occitanie"]
-    }  # French neighbors dictionary
+        "Provence-Alpes-Côte d'Azur": ["Auvergne-Rhône-Alpes", "Occitanie"],
+        "Corse": []  # Corse is an island and does not border any other regions
+    }
+
     states = {
-        "Auvergne-Rhône-Alpes": None,
-        "Bourgogne-Franche-Comté": None,
-        "Bretagne": None,
-        "Centre-Val de Loire": None,
-        "Corse": None,
-        "Grand Est": None,
         "Hauts-de-France": None,
-        "Île-de-France": None,
         "Normandie": None,
+        "Île-de-France": None,
+        "Grand Est": None,
+        "Bretagne": None,
+        "Pays de la Loire": None,
+        "Centre-Val de Loire": None,
+        "Bourgogne-Franche-Comté": None,
+        "Auvergne-Rhône-Alpes": None,
         "Nouvelle-Aquitaine": None,
         "Occitanie": None,
-        "Pays de la Loire": None,
-        "Provence-Alpes-Côte d'Azur": None
-    }  # French states dictionary
+        "Provence-Alpes-Côte d'Azur": None,
+        "Corse": None
+    }
+
 elif country_choice == "Rwanda":
     neighbors = {
         "Kigali City": ["Northern Province, Rwanda", "Southern Province, Rwanda", "East Province"],
