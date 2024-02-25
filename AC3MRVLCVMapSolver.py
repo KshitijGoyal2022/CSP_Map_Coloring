@@ -42,11 +42,17 @@ class AC3MRVLCVMapSolver(AC3MapColoringSolver):
     def backtrack(self, csp, uncertain):
         if not uncertain:
             return True
+
+        #selects the next state to assign a color to, using the Minimum Remaining Values (MRV) heuristic
         X = self.popMin(uncertain, key=lambda X: len(csp.domains[X]))
+
         removals = defaultdict(set)
+
         # Sort the values in domain in the order of LCV and loop in that order
         domainlist = list(csp.domains[X])
         domainlist.sort(key=lambda x: self.count_conflict(csp, X, x))
+
+        #Attempting to assign a color
         for x in domainlist:
             domainX = csp.domains[X]
             csp.domains[X] = set([x])
